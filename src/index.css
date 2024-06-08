@@ -7,6 +7,10 @@ body {
   overflow-y: scroll;
 }
 
+body *{
+  box-sizing: border-box;
+}
+
 .container{
   height: 100%;
   padding: 0;
@@ -20,9 +24,49 @@ body {
   display: inline-block;
 }
 
-input.exit-button {
-  background: url("Source/exit.png") no-repeat;
+.control{
+  float: right;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 10px;
+  margin-right: 5px;
+  width: 100px;
+}
+
+.title-bar{
+  background: #e6e7e9;
+  color: #2c2c3d;
+  font-size: 30px;
+}
+
+.prevent-select{
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+.draggable{
+  -webkit-app-region: drag;
+}
+
+.btn.minimize-button {
+  background: url("Source/minimize.png") no-repeat center / contain;
+}
+
+.btn.exit-button {
+  background: url("Source/exit.png") no-repeat center / contain;
+}
+
+.btn {
   border-style: hidden;
-  width: 180px;
-  height: 180px;
+  width: 25px;
+  height: 25px;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.1,1.1);
+  -ms-transform: scale(1.1,1.1);
+  -webkit-transform: scale(1.1,1.1);
+  filter: drop-shadow(0px 1px 1px #525252);
 }
