@@ -1,7 +1,6 @@
 body {
-  font-family: '나눔스퀘어 네오 OTF ExtraBold';
-  background: #EEF5DB;
-  margin: 0px;
+  font-family:'Apple SD Gothic Neo','arial','sans-serif';
+  background: #fcfff2;
   -ms-overflow-style: none;
 }
 
@@ -9,37 +8,24 @@ body {
   display: none;
 }
 
-body *{
-  box-sizing: border-box;
-}
-
-.container{
-  height: 100%;
+.titlebar{
   padding: 0;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .title{
+  font-family: '나눔스퀘어 네오 OTF ExtraBold';
   height: auto;
   padding: 10px;
   display: inline-block;
 }
 
-.control{
+.controlbar{
   float: right;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin-top: 10px;
-  margin-right: 5px;
-  width: 100px;
-}
-
-.title-bar{
-  font-family: '나눔스퀘어 네오 OTF ExtraBold';
-  background: #4F6367;
-  color: #B8D8D8;
-  font-size: 30px;
+  width: 150px;
 }
 
 .prevent-select{
@@ -52,22 +38,22 @@ body *{
   -webkit-app-region: drag;
 }
 
-.btn.minimize-button {
-  background: url("Source/minimize.png") no-repeat center / 75% auto;
+.min {
+  background: url("Source/minimize.png") no-repeat center / 25% auto;
 }
 
-.btn.maximize-button {
-  background: url("Source/maximize.png") no-repeat center / 75% auto;
+.max {
+  background: url("Source/maximize.png") no-repeat center / 25% auto;
 }
 
-.btn.exit-button {
-  background: url("Source/exit.png") no-repeat center / 50% auto;
+.close {
+  background: url("Source/exit.png") no-repeat center / 25% auto;
 }
 
 .btn {
   border-style: hidden;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 45px;
   transition: all 0.2s;
 }
 
@@ -75,6 +61,6 @@ body *{
   background-color: #2c2c3d;
 }
 
-.btn.btn.exit-button:hover {
+.close:hover {
   background-color: #FE5F55;
 }
