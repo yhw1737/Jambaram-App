@@ -1,10 +1,15 @@
 body {
-  font-family: 'Abadi Extra Light';
+  font-family: '나눔스퀘어 네오 OTF ExtraBold';
   font-size: 20px;
   line-height: 24px;
   color: #333;
   background: #ececec;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 body *{
@@ -50,11 +55,15 @@ body *{
 }
 
 .btn.minimize-button {
-  background: url("Source/minimize.png") no-repeat center / contain;
+  background: url("Source/minimize.png") no-repeat center / 75% auto;
+}
+
+.btn.maximize-button {
+  background: url("Source/maximize.png") no-repeat center / 75% auto;
 }
 
 .btn.exit-button {
-  background: url("Source/exit.png") no-repeat center / contain;
+  background: url("Source/exit.png") no-repeat center / 50% auto;
 }
 
 .btn {
@@ -65,8 +74,5 @@ body *{
 }
 
 .btn:hover {
-  transform: scale(1.1,1.1);
-  -ms-transform: scale(1.1,1.1);
-  -webkit-transform: scale(1.1,1.1);
-  filter: drop-shadow(0px 1px 1px #525252);
+  
 }

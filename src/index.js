@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('node:path');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const ipc = ipcMain;  
+const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -11,16 +12,32 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration : true,
+      contextIsolation : false
     },
   });
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  ipc.on('minimizeApp', ()=>{
+    mainWindow.minimize();
+  })
+
+  ipc.on('maximizeApp', ()=>{
+    if(mainWindow.isMaximized()){
+      mainWindow.restore();
+    } else {
+      mainWindow.maximize();
+    }
+  })
+
+  ipc.on('closeApp', ()=>{
+    mainWindow.close();
+  })
 };
 
 // This method will be called when Electron has finished
