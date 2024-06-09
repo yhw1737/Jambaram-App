@@ -11,7 +11,7 @@ body {
 .titlebar{
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto;
 }
 
 .title{
@@ -22,8 +22,9 @@ body {
 }
 
 .controlbar{
-  float: right;
   display: grid;
+  margin-left: auto;
+  margin-right: 0px;
   grid-template-columns: 1fr 1fr 1fr;
   width: 150px;
 }
