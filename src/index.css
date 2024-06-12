@@ -2,6 +2,7 @@ body {
   font-family:'Apple SD Gothic Neo','arial','sans-serif';
   background: #fcfff2;
   -ms-overflow-style: none;
+  margin: 0;
 }
 
 ::-webkit-scrollbar {
@@ -9,19 +10,28 @@ body {
 }
 
 .titlebar{
-  padding: 0;
+  padding: 5px 5px;
   display: grid;
   grid-template-columns: 1fr auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fcfff2;
+  z-index: 1000;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
 }
 
 .title{
   font-family: '나눔스퀘어 네오 OTF ExtraBold';
+  font-size: 20px;
   height: auto;
-  padding: 10px;
+  padding: 15px;
   display: inline-block;
 }
 
 .controlbar{
+  padding-top: 5px;
   display: grid;
   margin-left: auto;
   margin-right: 0px;
@@ -44,7 +54,7 @@ body {
 }
 
 .max {
-  background: url("Source/maximize.png") no-repeat center / 25% auto;
+  background: url("Source/maximize2.png") no-repeat center / 25% auto;
 }
 
 .close {
@@ -52,16 +62,76 @@ body {
 }
 
 .btn {
+  border-radius: 30%;
   border-style: hidden;
-  width: 50px;
+  width: 45px;
   height: 45px;
   transition: all 0.2s;
 }
 
-.btn:hover {
-  background-color: #2c2c3d;
+.min:hover {
+  filter:brightness(200%);
+  background-color: #181821;
+}
+
+.max:hover {
+  filter:brightness(200%);
+  background-color: #181821;
 }
 
 .close:hover {
-  background-color: #FE5F55;
+  filter:brightness(200%);
+  background-color: #57201c;
+}
+
+.container {
+  padding-top: 60px;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 150px;
+  background-color: none;
+  color: #181821;
+  padding: 15px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  color: #181821;
+  text-decoration: none;
+  font-family: '나눔스퀘어 네오 OTF Regular';
+  display: block;
+  padding: 5px;
+  border-radius: 5%;
+  transition: 0.2s;
+}
+
+.sidebar ul li a:hover {
+  background-color: #b0b0b6;
+}
+
+.content {
+  flex: 1;
+  margin-left: 150px;
+  padding: 20px;
+  overflow-y: auto;
+  height: auto;
+  box-sizing: border-box;
 }

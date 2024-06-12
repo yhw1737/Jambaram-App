@@ -3,16 +3,30 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>잼바람</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>잼바람.xyz</title>
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <div class="titlebar prevent-select">
-      <div class="title draggable">잼바람</div>
+      <div class="title draggable">잼바람.XYZ</div>
       <div class="controlbar">
         <input type="button" class="btn min" id="min">
         <input type="button" class="btn max" id="max">
         <input type="button" class="btn close" id="close">
+      </div>
+    </div>
+    <div class="container">
+      <div class="sidebar">
+        <ul>
+          <li><a href="#" id="champion-tier">챔피언 티어</a></li>
+          <li><a href="#" id="combination-tier">조합 티어</a></li>
+          <li><a href="#" id="champion-pick">챔피언 픽</a></li>
+          <li><a href="#" id="random-challenge">랜덤 챌린지</a></li>
+        </ul>
+      </div>
+      <div class="content" id="content">
+
       </div>
     </div>
     <script src='./function.js'></script>

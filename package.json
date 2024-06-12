@@ -1,6 +1,6 @@
 {
-  "name": "compick",
-  "productName": "compick",
+  "name": "jambaram",
+  "productName": "jambaram",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
@@ -29,6 +29,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "league-connect": "^6.0.0-rc13"
   }
 }
