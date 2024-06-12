@@ -21,38 +21,57 @@ btnClose.addEventListener("click", ()=>{
     ipc.send('closeApp');
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const content = document.getElementById('content');
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
 
-    const loadContent = (contentId) => {
-        switch (contentId) {
-            case 'champion-tier':
-                content.innerHTML = '<h1>챔피언 티어</h1><p>챔피언 티어 정보가 여기에 표시됩니다.</p>';
-                break;
-            case 'combination-tier':
-                content.innerHTML = '<h1>조합 티어</h1><p>조합 티어 정보가 여기에 표시됩니다.</p>';
-                break;
-            case 'champion-pick':
-                content.innerHTML = '<h1>챔피언 픽</h1><p>챔피언 픽 정보가 여기에 표시됩니다.</p>';
-                break;
-            case 'random-challenge':
-                content.innerHTML = '<h1>랜덤 챌린지</h1><p>랜덤 챌린지 정보가 여기에 표시됩니다.</p>';
-                break;
-            default:
-                content.innerHTML = '<h1>환영합니다</h1><p>사이드바 메뉴를 클릭하여 내용을 확인하세요.</p>';
-                break;
-        }
-    };
+    var links = document.querySelectorAll('.sidebar ul li a');
+    var content = document.getElementById('content');
 
-    // 초기 콘텐츠 로드
-    loadContent();
+    links.forEach(function(link) {
+        link.addEventListener('click', function() {
+            links.forEach(function(link) {
+                link.classList.remove('active');
+            });
 
-    // 사이드바 메뉴에 클릭 이벤트 추가
-    document.querySelectorAll('.sidebar ul li a').forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const contentId = event.target.id;
-            loadContent(contentId);
+            this.classList.add('active');
+
+            if (this.id === 'champion-tier') {
+                content.innerHTML = '<h1>챔피언 티어</h1><p>챔피언 티어 내용</p>';
+            } else if (this.id === 'combination-tier') {
+                content.innerHTML = '<h1>조합 티어</h1><p>조합 티어 내용</p>';
+            } else if (this.id === 'champion-pick') {
+                content.innerHTML = '<h1>챔피언 픽</h1><p>챔피언 픽 정보를 기다리고 있습니다...</p>';
+            } else if (this.id === 'random-challenge') {
+                content.innerHTML = '<h1>랜덤 챌린지</h1><p>랜덤 챌린지 내용</p>';
+            }
         });
     });
+
+    if (window.electronAPI) {
+        console.log('electronAPI is available');
+        window.electronAPI.onChampionPickData((data) => {
+        console.log('Received champion pick data in renderer');
+        displayChampionPick(content, data);
+        });
+    } else {
+        console.error('electronAPI is not available');
+    }
+
 });
+
+function displayChampionPick(content, actions) {
+    content.innerHTML = '<h1>챔피언 픽</h1>';
+    var championList = document.createElement('ul');
+  
+    actions.forEach(actionGroup => {
+      actionGroup.forEach(action => {
+        if (action.type === 'pick' && action.championId !== 0) {
+          var listItem = document.createElement('li');
+          listItem.textContent = `챔피언 ID: ${action.championId}`;
+          championList.appendChild(listItem);
+        }
+      });
+    });
+  
+    content.appendChild(championList);
+}

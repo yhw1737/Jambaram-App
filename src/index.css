@@ -87,7 +87,7 @@ body {
 .container {
   padding-top: 60px;
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 60px);
 }
 
 .sidebar {
@@ -118,13 +118,17 @@ body {
   text-decoration: none;
   font-family: '나눔스퀘어 네오 OTF Regular';
   display: block;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5%;
   transition: 0.2s;
 }
 
 .sidebar ul li a:hover {
-  background-color: #b0b0b6;
+  background-color: #c9c9d2;
+}
+
+.sidebar ul li a.active {
+  background-color: #c9c9d2;
 }
 
 .content {
@@ -132,6 +136,5 @@ body {
   margin-left: 150px;
   padding: 20px;
   overflow-y: auto;
-  height: auto;
   box-sizing: border-box;
 }
