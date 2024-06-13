@@ -1,28 +1,34 @@
-const { ipcRenderer } = require('electron');
-const ipc = ipcRenderer;
+window.onload = function() {
+    alert('functions loaded');
 
-var btnMin = document.getElementById("min");
-var btnMax = document.getElementById("max");
-var btnClose = document.getElementById("close");
+    var btnMin = document.getElementById("min");
+    var btnMax = document.getElementById("max");
+    var btnClose = document.getElementById("close");
 
-var stch = 0;
+    var stch = 0;
 
-btnMin.addEventListener("click", ()=>{
-    ipc.send('minimizeApp');
-});
+    btnMin.addEventListener("click", () => {
+        window.electronAPI.minimizeApp();
+    });
 
-btnMax.addEventListener("click", ()=>{
-    ipc.send('maximizeApp');
-    if(stch == 0) {btnMax.style.backgroundImage = "url('Source/maximize.png')"; stch = 1;}
-    else {btnMax.style.backgroundImage = "url('Source/maximize2.png')"; stch = 0;}
-});
+    btnMax.addEventListener("click", () => {
+        window.electronAPI.maximizeApp();
+        if (stch == 0) {
+            btnMax.style.backgroundImage = "url('Source/maximize.png')";
+            stch = 1;
+        } else {
+            btnMax.style.backgroundImage = "url('Source/maximize2.png')";
+            stch = 0;
+        }
+    });
 
-btnClose.addEventListener("click", ()=>{
-    ipc.send('closeApp');
-});
+    btnClose.addEventListener("click", () => {
+        window.electronAPI.closeApp();
+    });
+};
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded and parsed');
+    alert('DOM fully loaded and parsed');
 
     var links = document.querySelectorAll('.sidebar ul li a');
     var content = document.getElementById('content');
@@ -48,30 +54,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (window.electronAPI) {
-        console.log('electronAPI is available');
+        alert('electronAPI is available');
         window.electronAPI.onChampionPickData((data) => {
-        console.log('Received champion pick data in renderer');
-        displayChampionPick(content, data);
+            alert('Received champion pick data in renderer');
+            displayChampionPick(content, data);
         });
     } else {
-        console.error('electronAPI is not available');
+        alert('electronAPI is not available');
     }
-
 });
 
 function displayChampionPick(content, actions) {
     content.innerHTML = '<h1>챔피언 픽</h1>';
     var championList = document.createElement('ul');
-  
+
     actions.forEach(actionGroup => {
-      actionGroup.forEach(action => {
-        if (action.type === 'pick' && action.championId !== 0) {
-          var listItem = document.createElement('li');
-          listItem.textContent = `챔피언 ID: ${action.championId}`;
-          championList.appendChild(listItem);
-        }
-      });
+        actionGroup.forEach(action => {
+            if (action.type === 'pick' && action.championId !== 0) {
+                var listItem = document.createElement('li');
+                listItem.textContent = `챔피언 ID: ${action.championId}`;
+                championList.appendChild(listItem);
+            }
+        });
     });
-  
+
     content.appendChild(championList);
 }

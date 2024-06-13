@@ -14,8 +14,8 @@ const createWindow = async () => {
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration : true,
-      contextIsolation : false
+      nodeIntegration : false,
+      contextIsolation : true,
     },
   });
   
@@ -44,7 +44,7 @@ const createWindow = async () => {
       },
     });
     ws.subscribe('/lol-champ-select/v1/session', (data) => {
-      console.log('Received champion pick data'); // 로그 추가
+      console.log('Received champion pick data: ', data.actions); // 로그 추가
       mainWindow.webContents.send('championPickData', data.actions);
     });
   } catch (error) {
