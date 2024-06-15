@@ -37,19 +37,15 @@ const createWindow = async () => {
     mainWindow.close();
   })
 
-  try {
-    const ws = await createWebSocketConnection({
-      authenticationOptions: {
-        awaitConnection: true,
-      },
-    });
-    ws.subscribe('/lol-champ-select/v1/session', (data) => {
-      console.log('Received champion pick data: ', data.actions); // 로그 추가
-      mainWindow.webContents.send('championPickData', data.actions);
-    });
-  } catch (error) {
-    console.error('WebSocket connection failed:', error); // 에러 로그 추가
-  }
+  const ws = await createWebSocketConnection({
+    authenticationOptions: {
+      awaitConnection: true,
+    },
+  });
+
+  ws.subscribe('/lol-champ-select/v1/session', (data) => {
+    mainWindow.webContents.send('championPickData', data.actions);
+  });
 
 };
 

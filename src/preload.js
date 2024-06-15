@@ -6,5 +6,3 @@ contextBridge.exposeInMainWorld('electronAPI', {
   closeApp: () => ipcRenderer.send('closeApp'),
   onChampionPickData: (callback) => ipcRenderer.on('championPickData', (event, data) => callback(data))
 });
-
-alert('preload script loaded');
