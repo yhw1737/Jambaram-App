@@ -52,20 +52,52 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.electronAPI) {
     window.electronAPI.onChampionPickData((data) => {
       document.getElementById('champion-pick').click();
-      displayChampionPick(content, data);
+      displayChampionPick(content, data.myTeam, data.theirTeam, data.benchChampions);
     });
   }
 });
 
-function displayChampionPick(content, myTeam) {
+function displayChampionPick(content, myTeam, theirTeam, benchChampions) {
   content.innerHTML = '<h1>챔피언 픽</h1>';
-  var championList = document.createElement('ul');
+  
+  var myTeamList = document.createElement('ul');
+  var theirTeamList = document.createElement('ul');
+  var benchList = document.createElement('ul');
+
+  var sectionTitleMyTeam = document.createElement('h2');
+  sectionTitleMyTeam.textContent = '내 팀';
 
   myTeam.forEach(player => {
-    var listItem = document.createElement('li');
-    listItem.textContent = `챔피언 ID: ${player.championId}`;
-    championList.appendChild(listItem);
+      if (player.championId !== 0) {
+          var listItem = document.createElement('li');
+          listItem.textContent = `챔피언 ID: ${player.championId}`;
+          myTeamList.appendChild(listItem);
+      }
   });
 
-  content.appendChild(championList);
+  var sectionTitleTheirTeam = document.createElement('h2');
+  sectionTitleTheirTeam.textContent = '상대 팀';
+
+  theirTeam.forEach(player => {
+      if (player.championId !== 0) {
+          var listItem = document.createElement('li');
+          listItem.textContent = `챔피언 ID: ${player.championId}`;
+          theirTeamList.appendChild(listItem);
+      }
+  });
+
+  var sectionTitleBench = document.createElement('h2');
+  sectionTitleBench.textContent = '대기 챔피언';
+
+  benchChampions.forEach(champion => {
+      var listItem = document.createElement('li');
+      listItem.textContent = `챔피언 ID: ${champion.championId}`;
+      benchList.appendChild(listItem);
+  });
+  content.appendChild(sectionTitleMyTeam);
+  content.appendChild(myTeamList);
+  content.appendChild(sectionTitleTheirTeam);
+  content.appendChild(theirTeamList);
+  content.appendChild(sectionTitleBench);
+  content.appendChild(benchList);
 }

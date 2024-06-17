@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const ipc = ipcMain;  
 const path = require('path');
 const { createWebSocketConnection } = require('league-connect');
 
@@ -33,13 +32,17 @@ app.whenReady().then(createWindow);
 app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit());
 
 const connectToClient = async (mainWindow) => {
-  try {
-    const ws = await createWebSocketConnection({ awaitConnection: true });
-    ws.subscribe('/lol-champ-select/v1/session', (data) => {
-      console.log('Received data:', data);
-      mainWindow.webContents.send('championPickData', data.myTeam);
-    });
-  } catch (error) {
-    console.error('WebSocket connection failed:', error);
+  while (true) {
+    try {
+      const ws = await createWebSocketConnection({ awaitConnection: true });
+      ws.subscribe('/lol-champ-select/v1/session', (data) => {
+        mainWindow.webContents.send('championPickData', data);
+        console.log(data);
+      });
+      break;
+    } catch (error) {
+      console.log('could not connect to league client. restarting in 5sec');
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
   }
 };
