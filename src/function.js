@@ -51,24 +51,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.electronAPI) {
     window.electronAPI.onChampionPickData((data) => {
-      document.querySelector('#champion-pick').click();
+      document.getElementById('champion-pick').click();
       displayChampionPick(content, data);
     });
   }
 });
 
-function displayChampionPick(content, actions) {
+function displayChampionPick(content, myTeam) {
   content.innerHTML = '<h1>챔피언 픽</h1>';
   var championList = document.createElement('ul');
 
-  actions.forEach(actionGroup => {
-      actionGroup.forEach(action => {
-          if (action.type === 'pick' && action.championId !== 0) {
-              var listItem = document.createElement('li');
-              listItem.textContent = `챔피언 ID: ${action.championId}`;
-              championList.appendChild(listItem);
-          }
-      });
+  myTeam.forEach(player => {
+    var listItem = document.createElement('li');
+    listItem.textContent = `챔피언 ID: ${player.championId}`;
+    championList.appendChild(listItem);
   });
 
   content.appendChild(championList);

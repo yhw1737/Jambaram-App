@@ -18,49 +18,28 @@ const createWindow = async () => {
       contextIsolation : true,
     },
   });
-  
+
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  
+  ipcMain.on('minimizeApp', () => mainWindow.minimize());
+  ipcMain.on('maximizeApp', () => mainWindow.isMaximized() ? mainWindow.restore() : mainWindow.maximize());
+  ipcMain.on('closeApp', () => mainWindow.close());
 
-  ipc.on('minimizeApp', ()=>{
-    mainWindow.minimize();
-  })
-
-  ipc.on('maximizeApp', ()=>{
-    if(mainWindow.isMaximized()){
-      mainWindow.restore();
-    } else {
-      mainWindow.maximize();
-    }
-  })
-
-  ipc.on('closeApp', ()=>{
-    mainWindow.close();
-  })
-
-  const ws = await createWebSocketConnection({
-    authenticationOptions: {
-      awaitConnection: true,
-    },
-  });
-
-  ws.subscribe('/lol-champ-select/v1/session', (data) => {
-    mainWindow.webContents.send('championPickData', data.actions);
-  });
+  connectToClient(mainWindow);
 
 };
 
-app.whenReady().then(() => {
-  createWindow();
+app.whenReady().then(createWindow);
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit());
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
+const connectToClient = async (mainWindow) => {
+  try {
+    const ws = await createWebSocketConnection({ awaitConnection: true });
+    ws.subscribe('/lol-champ-select/v1/session', (data) => {
+      console.log('Received data:', data);
+      mainWindow.webContents.send('championPickData', data.myTeam);
+    });
+  } catch (error) {
+    console.error('WebSocket connection failed:', error);
   }
-});
+};
