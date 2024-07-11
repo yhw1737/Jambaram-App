@@ -54,7 +54,7 @@ body {
 }
 
 .max {
-  background: url("Source/maximize2.png") no-repeat center / 25% auto;
+  background: url("Source/maximize.png") no-repeat center / 25% auto;
 }
 
 .close {
